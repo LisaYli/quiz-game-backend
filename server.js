@@ -5,12 +5,12 @@ const cors = require('cors')
 const db = require("./database.js")
 app.use(cors())
 app.use(express.static('public'))
-const  bodyParser = require("body-parser")
-app.use(bodyParser.urlencoded({ extended: false }))
+const bodyParser = require("body-parser")
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 app.listen(httpPort, () => {
-    console.log("Server running on port %PORT%".replace("%PORT%",httpPort))
+    console.log("Server running on port %PORT%".replace("%PORT%", httpPort))
 });
 
 app.get('/', (req, res) => res.send('Hello World!'))
@@ -27,19 +27,22 @@ app.post("/createuser", (req, res, next) => {
     let params = []
     db.all(sql, params, (err, rows) => {
         if (err) {
-            res.status(400).json({"error":err.message});
+            if (err.message.includes("user_name")) {
+                res.status(400).json({"error": "Username is already in use"});
+                return;
+            } else if (err.message.includes("user_email"))
+                res.status(400).json({"error": "Email-address is already in use"});
             return;
         }
         res.json({
-            "message":"success",
-            "quiz":rows
+            "createUserStatus": "User created",
         })
     });
 });
 
 // For testing purposes
 app.post("/test", (req, res, next) => {
-    let request= req.body
+    let request = req.body
     res.send("username : " + req.body.username)
 
 });
