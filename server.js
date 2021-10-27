@@ -22,7 +22,7 @@ app.post("/createuser", (req, res, next) => {
     let newEmail = req.body.email
 
     let sql = `INSERT INTO users_table (user_name, user_password, user_email) 
-    VALUES (${newUsername}, ${newPassword}, ${newEmail});`
+    VALUES ("${newUsername}", "${newPassword}", "${newEmail}");`
 
     let params = []
     db.all(sql, params, (err, rows) => {
