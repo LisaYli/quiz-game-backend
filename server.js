@@ -28,14 +28,14 @@ app.post("/createuser", (req, res, next) => {
     db.all(sql, params, (err, rows) => {
         if (err) {
             if (err.message.includes("user_name")) {
-                res.status(200).json({"createUserStatus": "Username is already in use"});
+                res.status(200).json({"createUserStatus": "Username: " + newUsername + " is already in use"});
                 return;
             } else if (err.message.includes("user_email"))
-                res.status(200).json({"createUserStatus": "Email-address is already in use"});
+                res.status(200).json({"createUserStatus": "Email-address: " + newEmail + " is already in use"});
             return;
         }
         res.json({
-            "createUserStatus": "User created",
+            "createUserStatus": "User: " + newUsername + " created",
         })
     });
 });
