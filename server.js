@@ -15,7 +15,7 @@ app.listen(httpPort, () => {
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-// DB only accepts numbers (bug)
+// endpoint for creating new user
 app.post("/createuser", (req, res, next) => {
     let newUsername = req.body.username
     let newPassword = req.body.password
@@ -28,10 +28,10 @@ app.post("/createuser", (req, res, next) => {
     db.all(sql, params, (err, rows) => {
         if (err) {
             if (err.message.includes("user_name")) {
-                res.status(400).json({"error": "Username is already in use"});
+                res.status(200).json({"createUserStatus": "Username is already in use"});
                 return;
             } else if (err.message.includes("user_email"))
-                res.status(400).json({"error": "Email-address is already in use"});
+                res.status(200).json({"createUserStatus": "Email-address is already in use"});
             return;
         }
         res.json({
