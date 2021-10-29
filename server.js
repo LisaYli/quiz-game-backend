@@ -40,6 +40,26 @@ app.post("/createuser", (req, res, next) => {
     });
 });
 
+// endpoint for login in user
+app.post("/login", (req, res, next) => {
+    let loginUsername = req.body.username
+    let loginPassword = req.body.password
+
+    let sql = `SELECT *
+                FROM users_table
+                WHERE user_name="${loginUsername}"
+                AND user_password="${loginPassword}";`
+
+    let params = []
+    db.all(sql, params, (err, rows) => {
+        if (rows[0] == null) {
+            res.json({"userInfo": "userNotFound",})
+        } else {
+            res.json({"userInfo": rows[0],})
+        }
+    });
+});
+
 // For testing purposes
 app.post("/test", (req, res, next) => {
     let request = req.body
