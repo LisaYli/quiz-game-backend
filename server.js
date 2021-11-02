@@ -17,9 +17,9 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 // endpoint for creating new user
 app.post("/createuser", (req, res, next) => {
-    let newUsername = req.body.username
+    let newUsername = req.body.username.toLowerCase()
     let newPassword = req.body.password
-    let newEmail = req.body.email
+    let newEmail = req.body.email.toLowerCase()
 
     let sql = `INSERT INTO users_table (user_name, user_password, user_email) 
     VALUES ("${newUsername}", "${newPassword}", "${newEmail}");`
@@ -42,7 +42,7 @@ app.post("/createuser", (req, res, next) => {
 
 // endpoint for login in user
 app.post("/login", (req, res, next) => {
-    let loginUsername = req.body.username
+    let loginUsername = req.body.username.toLowerCase()
     let loginPassword = req.body.password
 
     let sql = `SELECT *
