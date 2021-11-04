@@ -60,6 +60,25 @@ app.post("/login", (req, res, next) => {
     });
 });
 
+// endpoint for starting game
+app.post("/startgame", (req, res, next) => {
+    let quizId = req.body.quizId
+
+    let sql = `SELECT * 
+    FROM questions_table
+    WHERE quiz_id="${quizId}";`
+
+    let params = []
+    db.all(sql, params, (err, rows) => {
+        if (rows[0] == null) {
+            res.json({"response:": "error error rows",})
+        } else {
+            res.json({"quizdata": rows})
+        }
+    });
+});
+
+
 // For testing purposes
 app.post("/test", (req, res, next) => {
     let request = req.body
