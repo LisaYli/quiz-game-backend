@@ -81,9 +81,14 @@ app.post("/startgame", (req, res, next) => {
 // endpoint for submitting score after game
 
 app.post("/endgame", (req, res, next) => {
+    let quizId = req.body.quizId
+    let userId = req.body.userId
+    let userScore = req.body.userScore
 
-console.log(req.body.userId + req.body.userScore + req.body.quizId)
-
+    console.log("test")
+    console.log(quizId)
+    console.log(userId)
+    console.log(userScore)
 
 
 });
