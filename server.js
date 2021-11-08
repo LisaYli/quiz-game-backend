@@ -85,18 +85,30 @@ app.post("/endgame", (req, res, next) => {
     let userId = req.body.userId
     let userScore = req.body.userScore
 
-    console.log("test")
-    console.log(quizId)
-    console.log(userId)
-    console.log(userScore)
+    let sql = `SELECT *
+                FROM highscores_table
+                WHERE user_id="${userId}"
+                AND quiz_id="${quizId}";`
+    let params = []
+    db.all(sql, params, (err, rows) => {
+        if (rows[0] == null) {
+            sql = `INSERT INTO highscores_table (user_id, quiz_id, user_score)
+                   VALUES ("${userId}", "${quizId}", "${userScore}");`
+            db.all(sql, params, (err, rows) => {
+
+            });
+
+        }
+
+    });
 
 
 });
-
 
 // For testing purposes
 app.post("/test", (req, res, next) => {
     let request = req.body
     res.send("username : " + req.body.username)
+
 
 });
