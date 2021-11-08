@@ -98,6 +98,16 @@ app.post("/endgame", (req, res, next) => {
 
             });
 
+        } else {
+            if (rows[0].user_score < userScore) {
+
+                sql = `UPDATE highscores_table SET user_score="${userScore}" 
+                WHERE user_id="${userId}"
+                AND quiz_id="${quizId}";`
+                db.all(sql, params, (err, rows) => {
+                });
+
+            }
         }
 
     });
