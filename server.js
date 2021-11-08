@@ -78,6 +78,16 @@ app.post("/startgame", (req, res, next) => {
     });
 });
 
+// endpoint for submitting score after game
+
+app.post("/endgame", (req, res, next) => {
+
+console.log(req.body.userId + req.body.userScore + req.body.quizId)
+
+
+
+});
+
 
 // For testing purposes
 app.post("/test", (req, res, next) => {
