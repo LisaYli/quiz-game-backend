@@ -111,14 +111,18 @@ app.post("/endgame", (req, res, next) => {
         }
 
     });
+    let totalScore = 0;
 
+    sql = `SELECT user_score FROM highscores_table 
+           WHERE user_id="${userId}";`
+    db.all(sql, params, (err, rows) => {
+        for (let i = 0; i < rows.length; i++) {
+            totalScore = totalScore + rows[i].user_score
+        }
+        sql = `UPDATE users_table SET user_score="${totalScore}"
+           WHERE id="${userId}";`
 
-});
-
-// For testing purposes
-app.post("/test", (req, res, next) => {
-    let request = req.body
-    res.send("username : " + req.body.username)
-
-
+        db.all(sql, params, (err, rows) => {
+        });
+    });
 });
