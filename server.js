@@ -79,12 +79,10 @@ app.post("/startgame", (req, res, next) => {
 });
 
 // endpoint for submitting score after game
-
 app.post("/endgame", (req, res, next) => {
     let quizId = req.body.quizId
     let userId = req.body.userId
     let userScore = req.body.userScore
-
     let sql = `SELECT *
                 FROM highscores_table
                 WHERE user_id="${userId}"
@@ -106,7 +104,6 @@ app.post("/endgame", (req, res, next) => {
                 AND quiz_id="${quizId}";`
                 db.all(sql, params, (err, rows) => {
                 });
-
             }
         }
 
@@ -135,7 +132,7 @@ app.get("/highscores", function (req, res){
     let usernamesArray = []
     let userScoresArray = []
 
-    let sql = `SELECT * FROM users_table;`
+    let sql = `SELECT * FROM users_table ORDER BY user_score DESC;`
     db.all(sql, params, (err,rows) => {
 
         for (let i = 0; i < rows.length; i++) {
