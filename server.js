@@ -126,3 +126,23 @@ app.post("/endgame", (req, res, next) => {
         });
     });
 });
+
+// endpoint for fetching highscores
+app.get("/highscores", function (req, res){
+    let params = []
+    let responseArray = []
+    let usernamesArray = []
+    let userScoresArray = []
+
+    let sql = `SELECT * FROM users_table;`
+    db.all(sql, params, (err,rows) => {
+
+        for (let i = 0; i < rows.length; i++) {
+            usernamesArray[i] = rows[i].user_name
+            userScoresArray[i] = rows[i].user_score
+        }
+        responseArray = [usernamesArray, userScoresArray]
+
+        res.send(responseArray)
+    });
+})
