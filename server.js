@@ -122,7 +122,8 @@ app.post("/endgame", (req, res, next) => {
         sql = `UPDATE users_table SET user_score="${totalScore}"
            WHERE id="${userId}";`
 
-        db.all(sql, params, (err, rows) => {
+        db.all(sql, params, (err,rows) => {
+
         });
     });
 });
