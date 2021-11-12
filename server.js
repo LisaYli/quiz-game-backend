@@ -107,10 +107,9 @@ app.post("/endgame", (req, res, next) => {
             }
         }
 
-    });
-    let totalScore = 0;
+        let totalScore = 0;
 
-    sql = `SELECT user_score FROM highscores_table 
+        sql = `SELECT user_score FROM highscores_table 
            WHERE user_id="${userId}";`
     db.all(sql, params, (err, rows) => {
         for (let i = 0; i < rows.length; i++) {
@@ -119,21 +118,21 @@ app.post("/endgame", (req, res, next) => {
         sql = `UPDATE users_table SET user_score="${totalScore}"
            WHERE id="${userId}";`
 
-        db.all(sql, params, (err,rows) => {
-
+            db.all(sql, params, (err, rows) => {
+            });
         });
     });
 });
 
 // endpoint for fetching highscores
-app.get("/highscores", function (req, res){
+app.get("/highscores", function (req, res) {
     let params = []
     let responseArray = []
     let usernamesArray = []
     let userScoresArray = []
 
     let sql = `SELECT * FROM users_table ORDER BY user_score DESC;`
-    db.all(sql, params, (err,rows) => {
+    db.all(sql, params, (err, rows) => {
 
         for (let i = 0; i < rows.length; i++) {
             usernamesArray[i] = rows[i].user_name
