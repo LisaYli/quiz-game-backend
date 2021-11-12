@@ -90,6 +90,7 @@ app.post("/endgame", (req, res, next) => {
     let params = []
     db.all(sql, params, (err, rows) => {
         if (rows[0] == null) {
+
             sql = `INSERT INTO highscores_table (user_id, quiz_id, user_score)
                    VALUES ("${userId}", "${quizId}", "${userScore}");`
             db.all(sql, params, (err, rows) => {
@@ -111,11 +112,12 @@ app.post("/endgame", (req, res, next) => {
 
         sql = `SELECT user_score FROM highscores_table 
            WHERE user_id="${userId}";`
-    db.all(sql, params, (err, rows) => {
-        for (let i = 0; i < rows.length; i++) {
-            totalScore = totalScore + rows[i].user_score
-        }
-        sql = `UPDATE users_table SET user_score="${totalScore}"
+        db.all(sql, params, (err, rows) => {
+            for (let i = 0; i < rows.length; i++) {
+
+                totalScore = totalScore + rows[i].user_score
+            }
+            sql = `UPDATE users_table SET user_score="${totalScore}"
            WHERE id="${userId}";`
 
             db.all(sql, params, (err, rows) => {
